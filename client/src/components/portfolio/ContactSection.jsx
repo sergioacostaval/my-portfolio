@@ -12,14 +12,14 @@ import emailjs from '@emailjs/browser';
 // 3. Créez un template avec les variables : {{from_name}}, {{from_email}}, {{subject}}, {{message}}
 // 4. Copiez votre PUBLIC_KEY depuis Account > API Keys
 // Remplacez les valeurs ci-dessous par les vôtres :
-const EMAILJS_SERVICE_ID  = 'service_ei87lom';
-const EMAILJS_TEMPLATE_ID = 'template_ylyolpc';
-const EMAILJS_PUBLIC_KEY  = 'BzkHxZlc99QVJTQj_';
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 // ─────────────────────────────────────────────────────────────────────────────
 
 const contactInfo = [
-    { icon: Mail,    label: 'Email',        value: 'contact@monportfolio.fr' },
-    { icon: Phone,   label: 'Téléphone',    value: '+514 333 3333' },
+    { icon: Mail,    label: 'Email',        value: 'sergioalasalle@gmail.com' },
+    { icon: Phone,   label: 'Téléphone',    value: '+438 529 6962' },
     { icon: MapPin,  label: 'Localisation', value: 'Montréal, Québec' },
 ];
 
@@ -50,6 +50,11 @@ export default function ContactSection() {
         e.preventDefault();
         const newErrors = validate(formData);
         if (Object.keys(newErrors).length) { setErrors(newErrors); return; }
+
+        if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+            setStatus('error');
+            return;
+        }
 
         setStatus('sending');
         emailjs
@@ -175,7 +180,7 @@ export default function ContactSection() {
 
                                 <Field label="Message" error={errors.message}>
                                     <Textarea
-                                        placeholder="Décrivez votre projet..."
+                                        placeholder="Décrivez votre demande..."
                                         value={formData.message}
                                         onChange={handleChange('message')}
                                         rows={5}

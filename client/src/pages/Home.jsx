@@ -7,6 +7,7 @@ import ProjectsSection from '../components/portfolio/ProjectsSection';
 import ContactSection from '../components/portfolio/ContactSection';
 import Footer from '../components/portfolio/Footer';
 import LiveChat from '../components/portfolio/LiveChat';
+import VideoChat from '../components/portfolio/VideoChat';
 
 export default function Home() {
     return (
@@ -18,6 +19,7 @@ export default function Home() {
             <ProjectsSection />
             <ContactSection />
             <Footer />
+            <VideoChat />
             <LiveChat />
         </div>
     );

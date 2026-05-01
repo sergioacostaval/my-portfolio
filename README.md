@@ -1,213 +1,269 @@
-# 🚀 Portfolio Chat App (Real-time + Video)
+# Portfolio Professionnel + Communication Temps Reel
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Frontend-React%20%2B%20Vite-blue"  alt="FrontEnd"/>
-  <img src="https://img.shields.io/badge/Backend-Express-green"  alt="BackEnd"/>
-  <img src="https://img.shields.io/badge/Realtime-Socket.IO-black"  alt="SocketIO"/>
-  <img src="https://img.shields.io/badge/Style-Tailwind%20%2B%20shadcn/ui-38bdf8"  alt="Tailwind"/>
-  <img src="https://img.shields.io/badge/License-MIT-yellow"  alt="MIT"/>
-  <img src="https://img.shields.io/github/stars/MouradIntellij/portfolio-chat?style=social"  alt=""/>
-</p>
+Portfolio full-stack construit avec React, Tailwind CSS, Node.js, Express, Socket.IO et WebRTC. Le projet inclut un site portfolio responsive, un chat texte en temps reel, des notifications Telegram et une fonctionnalite d'appel video basee sur WebRTC.
 
----
+## Stack
 
-## 🌐 Live Demo
+**Frontend**
+- React + Vite
+- Tailwind CSS
+- React Router
+- Framer Motion
+- Socket.IO Client
+- WebRTC natif
+- EmailJS
 
- 
-👉 **GitHub** : https://github.com/MouradIntellij/portfolio_chat    
-👉 **Vercel** : https://portfolio-chat-phi.vercel.app/
+**Backend**
+- Node.js
+- Express
+- Socket.IO
+- dotenv
+- CORS
+- Telegram Bot API
 
+**Infrastructure**
+- Docker
+- Docker Compose
 
-👉 **Frontend** : https://your-demo-link.com
-👉 **API** : https://your-api-link.com
+## Structure
 
----
-
-## 📸 Screenshots
-
-### 💬 Chat en temps réel
-
-![Chat Screenshot](./screenshots/chat.png)
-
-### 🎨 Interface Portfolio
-
-![Portfolio Screenshot](./screenshots/portfolio.png)
-
-### 📱 Responsive Design
-
-![Mobile Screenshot](./screenshots/mobile.png)
-
----
-
-## ✨ Features
-
-* 💬 Chat en temps réel avec Socket.IO
-* ⚡ Communication instantanée client ↔ serveur
-* 🎨 UI moderne avec Tailwind + shadcn/ui
-* 🔔 Notifications (Telegram intégré)
-* 🎥 Prêt pour vidéo temps réel (WebRTC ready)
-* 📱 Responsive design (mobile + desktop)
-* 🧠 Formulaires avancés (React Hook Form + Zod)
-* 🎞️ Animations fluides (Framer Motion)
-
----
-
-## 🧱 Tech Stack
-
-### Frontend
-
-* React + Vite
-* Tailwind CSS
-* shadcn/ui
-* Socket.IO Client
-* React Router
-* Framer Motion
-
-### Backend
-
-* Node.js
-* Express
-* Socket.IO
-* dotenv
-* CORS
-
----
-
-## 📁 Project Structure
-
-```bash id="p2xstruct"
-portfolio-chat/
-│
-├── client/          # React app (Vite)
-├── server/          # Express + Socket.IO
-├── screenshots/     # Images du README
-├── .env
-└── package.json
+```text
+portfolio_chat/
+|-- client/                 # Application React/Vite
+|   |-- Dockerfile
+|   |-- .env.example
+|   `-- src/
+|-- server/                 # Serveur Express + Socket.IO
+|   |-- Dockerfile
+|   |-- .env.example
+|   `-- server.js
+|-- docker-compose.yml
+|-- .env.example
+|-- package.json
+`-- README.md
 ```
 
----
+## Variables D'environnement
 
-## ⚙️ Installation
+Copier les fichiers d'exemple avant de lancer le projet.
 
-```bash id="installcmd"
-git clone https://github.com/ton-username/portfolio-chat.git
-cd portfolio-chat
-npm install
-
-cd client
-npm install
-cd ..
+```bash
+cp .env.example .env
+cp client/.env.example client/.env
+cp server/.env.example server/.env
 ```
 
----
+Sur Windows PowerShell, creer les fichiers manuellement ou copier le contenu des `.env.example`.
 
-## 🔑 Environment Variables
+### Racine `.env`
 
-### Backend (`.env`)
+Utilise par `docker-compose.yml` et par le backend quand il est lance depuis la racine.
 
-```env id="envback"
+```env
 PORT=3001
 CLIENT_URL=http://localhost:5173
 ADMIN_DASHBOARD_URL=http://localhost:5173/chat
 
 NOTIFY_CHANNEL=telegram
+TELEGRAM_BOT_TOKEN=your_bot_token
+TELEGRAM_CHAT_ID=your_chat_id
 
-TELEGRAM_BOT_TOKEN=your_token
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+### Client `client/.env`
+
+```env
+VITE_CHAT_SERVER_URL=http://localhost:3001
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+### Serveur `server/.env`
+
+```env
+PORT=3001
+CLIENT_URL=http://localhost:5173
+ADMIN_DASHBOARD_URL=http://localhost:5173/chat
+
+NOTIFY_CHANNEL=telegram
+TELEGRAM_BOT_TOKEN=your_bot_token
 TELEGRAM_CHAT_ID=your_chat_id
 ```
 
----
+Ne jamais publier les fichiers `.env` reels. Utiliser seulement les `.env.example` dans Git.
 
-### Frontend (`client/.env`)
+## Installation Locale
 
-```env id="envfront"
-VITE_CHAT_SERVER_URL=http://localhost:3001
+Installer les dependances de la racine et du client.
+
+```bash
+npm install
+cd client
+npm install
+cd ..
 ```
 
----
+Lancer frontend et backend ensemble:
 
-## ▶️ Run the App
-
-```bash id="runcmd"
+```bash
 npm run dev
 ```
 
-### 🔥 Runs:
+URLs locales:
 
-* Frontend → http://localhost:5173
-* Backend → http://localhost:3001
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:3001`
+- Admin chat: `http://localhost:5173/chat`
 
----
+Tester rapidement le backend:
 
-## 📜 Available Scripts
-
-```bash id="scriptscmd"
-npm run dev        # Run client + server
-npm run build      # Build frontend
-npm run preview    # Preview build
-npm run lint       # Lint project
+```bash
+curl http://localhost:3001/api/live-chat/rooms
 ```
 
----
+## Docker
 
-## 🔌 Real-time (Socket.IO)
+Le projet peut etre lance avec une seule commande:
 
-* Server: `http://localhost:3001`
-* Client: via `VITE_CHAT_SERVER_URL`
-
----
-
-## 🛡️ Security
-
-❌ Ne jamais commit :
-
-* `.env`
-* Tokens
-* Clés API
-
-✅ Utiliser :
-
-```bash id="envexample"
-.env.example
+```bash
+docker-compose up --build
 ```
 
----
+Services exposes:
 
-## 🚀 Roadmap
+- `portfolio-client`: `http://localhost:5173`
+- `portfolio-server`: `http://localhost:3001`
 
-* 🔐 Authentification (JWT)
-* 💾 Base de données (MongoDB / PostgreSQL)
-* 👥 Rooms / channels
-* 📎 Upload fichiers
-* 🎥 WebRTC vidéo live
+Verifier les conteneurs:
 
----
+```bash
+docker-compose ps
+```
 
-## 📦 Deployment
+Voir les logs:
 
-### Frontend
+```bash
+docker-compose logs --tail=40 client
+docker-compose logs --tail=40 server
+```
 
-* Vercel / Netlify
+Arreter les services:
 
-### Backend
+```bash
+docker-compose down
+```
 
-* Render / Railway / VPS
+## Fonctionnalites
 
----
+### Portfolio
 
-## 👨‍💻 Author
+- Hero responsive avec animation
+- Sections A propos, competences, projets, contact et footer
+- Mode clair/sombre avec toggle
+- Navigation fluide avec header fixe
+- Animations Framer Motion
 
-Développé pour un portfolio fullstack moderne avec temps réel.
+### Chat Temps Reel
 
----
+- Bouton flottant integre au portfolio
+- Messages en temps reel avec Socket.IO
+- Salles de conversation visiteur/admin
+- Historique en memoire pendant la session serveur
+- Horodatage cote serveur
+- Notification Telegram au premier message visiteur
+- Interface admin disponible sur `/chat`
 
-## ⭐ Support
+### Appel Video WebRTC
 
-Si tu aimes le projet :
-👉 Laisse une ⭐ sur GitHub !
+- Creation de salle video
+- Rejoindre une salle par code
+- Acces camera/micro avec `getUserMedia`
+- Video locale et video distante
+- Mute/unmute microphone
+- Activation/desactivation camera
+- Terminer l'appel et liberation des ressources
+- Signalisation WebRTC via Socket.IO
+- Serveurs STUN publics Google
 
----
+Note: en production, WebRTC/getUserMedia exige HTTPS.
 
-## 📄 License
+## Scripts
 
-MIT License
+```bash
+npm run dev          # Lance client + serveur
+npm run dev:client   # Lance seulement Vite
+npm run dev:server   # Lance seulement Express/Socket.IO
+npm run build        # Build du frontend
+npm run preview      # Preview du build frontend
+npm run lint         # ESLint
+```
+
+## Endpoints Principaux
+
+Chat:
+
+- `POST /api/live-chat/notify`
+- `GET /api/live-chat/rooms`
+
+Video:
+
+- `POST /api/video/rooms`
+- `GET /api/video/rooms/:roomId`
+
+Socket.IO:
+
+- `join-room`
+- `message`
+- `video:join-room`
+- `video:offer`
+- `video:answer`
+- `video:ice-candidate`
+- `video:leave-room`
+
+## Deploiement
+
+Frontend recommande:
+
+- Vercel
+
+Backend recommande:
+
+- Render ou Railway
+
+Variables importantes en production:
+
+- `CLIENT_URL`: URL publique Vercel
+- `VITE_CHAT_SERVER_URL`: URL publique Render/Railway
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_CHAT_ID`
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
+
+## Securite
+
+- Les `.env` reels sont ignores par Git.
+- Les tokens Telegram et les cles EmailJS ne doivent pas etre hardcodes dans le code source.
+- Si un token a deja ete publie dans GitHub, il faut le regenerer.
+
+## Etat Du Projet
+
+Fonctionnel localement:
+
+- Portfolio React
+- Chat texte Socket.IO
+- Notifications Telegram
+- Appel video WebRTC
+- Docker Compose local
+
+A completer pour couvrir tout le cahier des charges:
+
+- API REST complete avec JWT/CRUD
+- Base de donnees
+- Documentation Swagger ou Postman
+- Deploiement final Vercel + Render/Railway
+- Tests production WebRTC sous HTTPS

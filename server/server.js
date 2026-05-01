@@ -27,6 +27,8 @@ app.use(express.json());
 // ─────────────────────────────
 const roomMessages = new Map();
 const waitingRooms = new Map();
+const videoRooms = new Map();
+const socketVideoRoom = new Map();
 
 const MAX_HISTORY = 100;
 
@@ -97,6 +99,27 @@ app.post("/api/live-chat/notify", async (req, res) => {
 // ADMIN GET ROOMS (backup)
 app.get("/api/live-chat/rooms", (req, res) => {
     res.json({ rooms: [...waitingRooms.values()] });
+});
+
+app.post("/api/video/rooms", (req, res) => {
+    const roomId = crypto.randomUUID();
+
+    videoRooms.set(roomId, {
+        roomId,
+        participants: [],
+        createdAt: new Date().toISOString(),
+    });
+
+    res.json({ ok: true, roomId });
+});
+
+app.get("/api/video/rooms/:roomId", (req, res) => {
+    const room = videoRooms.get(req.params.roomId);
+
+    res.json({
+        exists: Boolean(room),
+        participants: room?.participants || [],
+    });
 });
 
 // ─────────────────────────────
@@ -181,10 +204,95 @@ io.on("connection", (socket) => {
         console.log(`💬 [${sender}] ${text}`);
     });
 
+    socket.on("video:leave-room", () => {
+        leaveVideoRoom(socket);
+    });
+
+    socket.on("video:join-room", ({ roomId, userName }) => {
+        if (!roomId) return;
+
+        socket.join(roomId);
+        socket.data.videoRoomId = roomId;
+        socket.data.videoUserName = userName || "Utilisateur";
+        socketVideoRoom.set(socket.id, roomId);
+
+        if (!videoRooms.has(roomId)) {
+            videoRooms.set(roomId, {
+                roomId,
+                participants: [],
+                createdAt: new Date().toISOString(),
+            });
+        }
+
+        const room = videoRooms.get(roomId);
+        room.participants = room.participants.filter((participant) => participant.id !== socket.id);
+
+        const participant = {
+            id: socket.id,
+            name: socket.data.videoUserName,
+            joinedAt: new Date().toISOString(),
+        };
+
+        room.participants.push(participant);
+
+        socket.emit("video:room-participants", room.participants.filter((item) => item.id !== socket.id));
+        socket.to(roomId).emit("video:user-joined", participant);
+        io.to(roomId).emit("video:participants-updated", room.participants);
+    });
+
+    socket.on("video:offer", ({ targetUserId, offer }) => {
+        if (!targetUserId || !offer) return;
+
+        io.to(targetUserId).emit("video:offer", {
+            fromUserId: socket.id,
+            fromUserName: socket.data.videoUserName || "Utilisateur",
+            offer,
+        });
+    });
+
+    socket.on("video:answer", ({ targetUserId, answer }) => {
+        if (!targetUserId || !answer) return;
+
+        io.to(targetUserId).emit("video:answer", {
+            fromUserId: socket.id,
+            answer,
+        });
+    });
+
+    socket.on("video:ice-candidate", ({ targetUserId, candidate }) => {
+        if (!targetUserId || !candidate) return;
+
+        io.to(targetUserId).emit("video:ice-candidate", {
+            fromUserId: socket.id,
+            candidate,
+        });
+    });
+
     socket.on("disconnect", () => {
+        leaveVideoRoom(socket);
         console.log("🔴 Déconnecté:", socket.id);
     });
 });
+
+function leaveVideoRoom(socket) {
+    const roomId = socketVideoRoom.get(socket.id) || socket.data.videoRoomId;
+    if (!roomId) return;
+
+    const room = videoRooms.get(roomId);
+    if (room) {
+        room.participants = room.participants.filter((participant) => participant.id !== socket.id);
+        socket.to(roomId).emit("video:user-left", { id: socket.id });
+        io.to(roomId).emit("video:participants-updated", room.participants);
+
+        if (room.participants.length === 0) {
+            videoRooms.delete(roomId);
+        }
+    }
+
+    socket.leave(roomId);
+    socketVideoRoom.delete(socket.id);
+    socket.data.videoRoomId = undefined;
+}
 
 server.listen(process.env.PORT || 3001, () => {
     console.log("🚀 Server running on http://localhost:3001");

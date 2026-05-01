@@ -1,0 +1,30 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: portfolio-server
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      CLIENT_URL: http://localhost:5173
+      ADMIN_DASHBOARD_URL: http://localhost:5173/chat
+      NOTIFY_CHANNEL: telegram
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: portfolio-client
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_CHAT_SERVER_URL: http://localhost:3001
+      VITE_EMAILJS_SERVICE_ID: ${VITE_EMAILJS_SERVICE_ID}
+      VITE_EMAILJS_TEMPLATE_ID: ${VITE_EMAILJS_TEMPLATE_ID}
+      VITE_EMAILJS_PUBLIC_KEY: ${VITE_EMAILJS_PUBLIC_KEY}
+    depends_on:
+      - server
