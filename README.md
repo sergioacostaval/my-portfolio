@@ -1,4 +1,4 @@
-# Portfolio Professionnel + Communication Temps Reel
+# Portfolio Professionnel & Communication Temps Reel
 
 Portfolio full-stack construit avec React, Tailwind CSS, Node.js, Express, Socket.IO et WebRTC. Le projet inclut un site portfolio responsive, un chat texte en temps reel, des notifications Telegram et une fonctionnalite d'appel video basee sur WebRTC.
 
@@ -226,23 +226,31 @@ Socket.IO:
 
 ## Deploiement
 
-Frontend recommande:
+Deploiement actuel:
 
-- Vercel
+- Frontend Vercel: `https://my-portfolio-two-theta-kq3fil0jzy.vercel.app`
+- Backend Render: `https://my-portfolio-api-1ldo.onrender.com`
+- Admin chat: `https://my-portfolio-two-theta-kq3fil0jzy.vercel.app/chat`
 
-Backend recommande:
+Tests rapides:
 
-- Render ou Railway
+```bash
+curl https://my-portfolio-api-1ldo.onrender.com/api/live-chat/rooms
+curl https://my-portfolio-api-1ldo.onrender.com/api/video/rooms/test
+```
 
 Variables importantes en production:
 
-- `CLIENT_URL`: URL publique Vercel
-- `VITE_CHAT_SERVER_URL`: URL publique Render/Railway
+- `CLIENT_URL`: `https://my-portfolio-two-theta-kq3fil0jzy.vercel.app`
+- `ADMIN_DASHBOARD_URL`: `https://my-portfolio-two-theta-kq3fil0jzy.vercel.app/chat`
+- `VITE_CHAT_SERVER_URL`: `https://my-portfolio-api-1ldo.onrender.com`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 - `VITE_EMAILJS_SERVICE_ID`
 - `VITE_EMAILJS_TEMPLATE_ID`
 - `VITE_EMAILJS_PUBLIC_KEY`
+
+Le frontend utilise `client/vercel.json` pour rediriger les routes React vers `index.html`. Cela permet d'ouvrir directement `/chat?roomId=...` depuis Telegram.
 
 ## Securite
 
@@ -259,11 +267,11 @@ Fonctionnel localement:
 - Notifications Telegram
 - Appel video WebRTC
 - Docker Compose local
+- Deploiement Vercel + Render
 
 A completer pour couvrir tout le cahier des charges:
 
 - API REST complete avec JWT/CRUD
 - Base de donnees
 - Documentation Swagger ou Postman
-- Deploiement final Vercel + Render/Railway
 - Tests production WebRTC sous HTTPS
