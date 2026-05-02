@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BrainCircuit, Code2, Database, LineChart, Rocket, Users } from 'lucide-react';
+import { BrainCircuit, Code2, Database, Download, LineChart, Rocket, Users } from 'lucide-react';
 
 const stats = [
     { icon: Code2, value: '1+', label: "Année d'expérience" },
@@ -41,7 +41,17 @@ export default function AboutSection() {
                         transition={{ duration: 0.7 }}
                         className="lg:sticky lg:top-28"
                     >
-                        <span className="text-xs font-semibold uppercase tracking-widest text-primary">À propos</span>
+                        <div className="mb-6 flex items-center gap-4">
+                            <img
+                                src="/sergio-profile.png"
+                                alt="Sergio Acosta"
+                                className="h-20 w-20 rounded-2xl border border-border object-cover shadow-lg shadow-primary/10"
+                            />
+                            <div>
+                                <span className="text-xs font-semibold uppercase tracking-widest text-primary">À propos</span>
+                                <p className="mt-1 text-sm text-muted-foreground">Sergio Acosta</p>
+                            </div>
+                        </div>
                         <h2 className="mt-4 font-playfair text-4xl font-bold leading-tight text-foreground md:text-5xl">
                             Je crée des solutions où la technique sert une décision claire.
                         </h2>
@@ -50,6 +60,18 @@ export default function AboutSection() {
                             je relie des applications métiers performantes, IA et trading pour
                             livrer des outils concrets, lisibles et utiles.
                         </p>
+
+                        <div className="mt-7 flex flex-wrap gap-3">
+                            <a
+                                href="/Sergio_Acosta_CV.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/70 px-5 py-3 text-sm font-semibold text-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:text-primary"
+                            >
+                                <Download className="h-4 w-4" />
+                                Télécharger CV
+                            </a>
+                        </div>
 
                         <div className="mt-8 grid grid-cols-3 gap-3">
                             {stats.map(({ icon: Icon, value, label }) => (
