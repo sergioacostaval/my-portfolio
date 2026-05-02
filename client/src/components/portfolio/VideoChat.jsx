@@ -44,6 +44,7 @@ export default function VideoChat() {
         setRemoteStreams([...remoteStreamsRef.current.entries()].map(([id, stream]) => ({ id, stream })));
     }, []);
 
+    // Ferme les connexions, arrete la camera et vide l'etat de l'appel.
     const cleanupCall = useCallback((notifyServer = true) => {
         if (notifyServer) {
             socketRef.current?.emit('video:leave-room');
@@ -92,6 +93,7 @@ export default function VideoChat() {
             setStatus('Serveur vidéo déconnecté');
         });
 
+        // Quand on rejoint une salle, on cree une offre pour chaque participant deja present.
         socket.on('video:room-participants', async (existingParticipants) => {
             setParticipants(existingParticipants || []);
             await Promise.all((existingParticipants || []).map((participant) => createOffer(participant.id)));
@@ -109,6 +111,7 @@ export default function VideoChat() {
             setStatus(`${participant.name} a rejoint la salle`);
         });
 
+        // Quand une offre arrive, on cree une reponse pour accepter la connexion.
         socket.on('video:offer', async ({ fromUserId, fromUserName, offer }) => {
             const pc = getPeerConnection(fromUserId, fromUserName);
             await pc.setRemoteDescription(new RTCSessionDescription(offer));
@@ -150,12 +153,14 @@ export default function VideoChat() {
         }
     }, [mediaStarted]);
 
+    // Cree une connexion WebRTC avec un autre participant.
     const getPeerConnection = (participantId, participantName = 'Invité') => {
         const current = peerConnectionsRef.current.get(participantId);
         if (current) return current;
 
         const pc = new RTCPeerConnection(ICE_SERVERS);
 
+        // Envoie le candidat ICE au serveur pour le transmettre a l'autre participant.
         pc.onicecandidate = (event) => {
             if (event.candidate) {
                 socketRef.current?.emit('video:ice-candidate', {
@@ -165,6 +170,7 @@ export default function VideoChat() {
             }
         };
 
+        // Recoit le flux video distant et l'affiche dans l'interface.
         pc.ontrack = (event) => {
             if (!event.streams[0]) return;
             remoteStreamsRef.current.set(participantId, event.streams[0]);
@@ -183,6 +189,7 @@ export default function VideoChat() {
         return pc;
     };
 
+    // Cree une offre WebRTC et l'envoie au participant cible.
     const createOffer = async (participantId) => {
         const pc = getPeerConnection(participantId);
         const offer = await pc.createOffer();
@@ -190,6 +197,7 @@ export default function VideoChat() {
         socketRef.current?.emit('video:offer', { targetUserId: participantId, offer: pc.localDescription });
     };
 
+    // Demande l'acces a la camera et au micro du navigateur.
     const startMedia = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         localStreamRef.current = stream;
@@ -199,6 +207,7 @@ export default function VideoChat() {
         setError('');
     };
 
+    // Cree une salle sur le serveur puis rejoint cette salle avec la camera active.
     const createRoom = async () => {
         try {
             if (!socketRef.current?.connected) return;
@@ -214,6 +223,7 @@ export default function VideoChat() {
         }
     };
 
+    // Verifie que la salle existe avant de demander l'acces camera et micro.
     const joinRoom = async (event) => {
         event.preventDefault();
         const targetRoom = joinRoomId.trim();
@@ -236,6 +246,7 @@ export default function VideoChat() {
         }
     };
 
+    // Active ou coupe seulement la piste audio locale.
     const toggleAudio = () => {
         const audioTrack = localStreamRef.current?.getAudioTracks()[0];
         if (!audioTrack) return;
@@ -243,6 +254,7 @@ export default function VideoChat() {
         setAudioEnabled(audioTrack.enabled);
     };
 
+    // Active ou coupe seulement la piste video locale.
     const toggleVideo = () => {
         const videoTrack = localStreamRef.current?.getVideoTracks()[0];
         if (!videoTrack) return;
@@ -250,6 +262,7 @@ export default function VideoChat() {
         setVideoEnabled(videoTrack.enabled);
     };
 
+    // Copie le code de salle pour le partager avec une autre personne.
     const copyRoomId = async () => {
         if (!roomId) return;
         await navigator.clipboard?.writeText(roomId);

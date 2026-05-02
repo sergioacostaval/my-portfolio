@@ -36,6 +36,7 @@ function getHistory(roomId) {
     return roomMessages.get(roomId) || [];
 }
 
+// Garde seulement les derniers messages pour eviter une memoire trop grande.
 function saveMessage(roomId, msg) {
     const history = getHistory(roomId);
     roomMessages.set(roomId, [...history, msg].slice(-MAX_HISTORY));
@@ -44,6 +45,7 @@ function saveMessage(roomId, msg) {
 // ─────────────────────────────
 // TELEGRAM
 // ─────────────────────────────
+// Envoie une notification Telegram quand un visiteur ouvre le chat.
 async function notifyTelegram({ roomId, visitorName, pageUrl }) {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -73,6 +75,7 @@ async function notifyTelegram({ roomId, visitorName, pageUrl }) {
 // ─────────────────────────────
 // NOTIFY (OPEN CHAT)
 // ─────────────────────────────
+// Cree une salle de chat et previent l'admin qu'un visiteur attend.
 app.post("/api/live-chat/notify", async (req, res) => {
     const roomId = req.body?.roomId || crypto.randomUUID();
     const visitorName = req.body?.visitorName || "Anonyme";
@@ -101,6 +104,7 @@ app.get("/api/live-chat/rooms", (req, res) => {
     res.json({ rooms: [...waitingRooms.values()] });
 });
 
+// Cree une nouvelle salle video avec un identifiant unique.
 app.post("/api/video/rooms", (req, res) => {
     const roomId = crypto.randomUUID();
 
@@ -124,6 +128,7 @@ app.get("/api/video/rooms/:roomId", (req, res) => {
 
 // ─────────────────────────────
 // SOCKET SYSTEM
+// Envoie a Telegram le premier message du visiteur avec un lien vers l'admin.
 async function notifyTelegramFirstMessage({ roomId, visitorName, message }) {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -159,6 +164,7 @@ io.on("connection", (socket) => {
     console.log("🟢 Connecté:", socket.id);
 
     // JOIN ROOM
+    // Ces evenements gerent le chat en temps reel avec Socket.IO.
     socket.on("join-room", ({ roomId, role }) => {
         socket.join(roomId);
         socket.data.roomId = roomId;
@@ -168,6 +174,7 @@ io.on("connection", (socket) => {
     });
 
     // MESSAGE
+    // Recoit un message du visiteur ou de l'admin et le renvoie a la salle.
     socket.on("message", (data) => {
         const text = (data?.text || "").trim();
         const sender = data?.sender;
@@ -188,6 +195,7 @@ io.on("connection", (socket) => {
         // ─────────────────────────────
         // 🔥 CAPTURE PREMIER MESSAGE VISITOR
         // ─────────────────────────────
+        // La notification Telegram est envoyee une seule fois par salle.
         if (sender === "visitor" && !firstMessages.has(roomId)) {
             firstMessages.set(roomId, msg);
 
@@ -208,6 +216,7 @@ io.on("connection", (socket) => {
         leaveVideoRoom(socket);
     });
 
+    // L'utilisateur rejoint une salle video. Le serveur garde la liste des participants.
     socket.on("video:join-room", ({ roomId, userName }) => {
         if (!roomId) return;
 
@@ -235,11 +244,13 @@ io.on("connection", (socket) => {
 
         room.participants.push(participant);
 
+        // Le nouveau participant recoit la liste des personnes deja dans la salle.
         socket.emit("video:room-participants", room.participants.filter((item) => item.id !== socket.id));
         socket.to(roomId).emit("video:user-joined", participant);
         io.to(roomId).emit("video:participants-updated", room.participants);
     });
 
+    // Le serveur transmet l'offre WebRTC a l'autre utilisateur.
     socket.on("video:offer", ({ targetUserId, offer }) => {
         if (!targetUserId || !offer) return;
 
@@ -250,6 +261,7 @@ io.on("connection", (socket) => {
         });
     });
 
+    // Le serveur transmet la reponse WebRTC a l'utilisateur qui a cree l'offre.
     socket.on("video:answer", ({ targetUserId, answer }) => {
         if (!targetUserId || !answer) return;
 
@@ -259,6 +271,7 @@ io.on("connection", (socket) => {
         });
     });
 
+    // Les candidats ICE aident les navigateurs a trouver le meilleur chemin reseau.
     socket.on("video:ice-candidate", ({ targetUserId, candidate }) => {
         if (!targetUserId || !candidate) return;
 
@@ -274,6 +287,7 @@ io.on("connection", (socket) => {
     });
 });
 
+// Nettoie la salle quand un utilisateur quitte ou ferme la page.
 function leaveVideoRoom(socket) {
     const roomId = socketVideoRoom.get(socket.id) || socket.data.videoRoomId;
     if (!roomId) return;

@@ -51,8 +51,11 @@ export default function Admin() {
 
         s.on('connect',       () => setConnected(true));
         s.on('disconnect',    () => setConnected(false));
+        // Met a jour la liste des salles quand un visiteur ouvre un chat.
         s.on('rooms-updated', (updatedRooms) => setRooms(updatedRooms));
+        // Charge l'historique de la salle quand l'admin la rejoint.
         s.on('history',       (h)   => setMessages(h || []));
+        // Ajoute chaque nouveau message recu en temps reel.
         s.on('message',       (msg) => setMessages(prev => [...prev, msg]));
         s.on('typing',        (data) => {
             if (data.sender === 'visitor') {
@@ -70,6 +73,7 @@ export default function Admin() {
         return () => s.disconnect();
     }, []);
 
+    // L'admin rejoint la salle du visiteur pour repondre aux messages.
     const joinRoom = (room) => {
         if (!socketRef.current) return;
         setActiveRoom(room);
@@ -84,6 +88,7 @@ export default function Admin() {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
+    // Envoie la reponse de l'admin dans la salle active.
     const sendMessage = () => {
         if (!input.trim() || !socketRef.current || !connected || !activeRoom) return;
         socketRef.current.emit('message', { roomId: activeRoom.roomId, text: input.trim(), sender: 'admin' });
@@ -94,6 +99,7 @@ export default function Admin() {
         if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
     };
 
+    // Calcule les compteurs affiches dans le panneau admin.
     const visitorMsgs = messages.filter(m => m.sender === 'visitor').length;
     const adminMsgs   = messages.filter(m => m.sender === 'admin').length;
     const formatTime  = (iso) => new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });

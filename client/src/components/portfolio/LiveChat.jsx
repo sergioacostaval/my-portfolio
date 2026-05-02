@@ -15,11 +15,13 @@ export default function LiveChat() {
     const [notifStatus, setNotifStatus] = useState('idle');
 
     const bottomRef = useRef(null);
+    // Evite d'envoyer plusieurs notifications Telegram pour la meme conversation.
     const hasNotifiedRef = useRef(false);
 
     // ─────────────────────────────
     // SOCKET INIT
     // ─────────────────────────────
+    // Cree la connexion Socket.IO quand le visiteur ouvre le chat.
     useEffect(() => {
         if (!open) return;
 
@@ -70,6 +72,7 @@ export default function LiveChat() {
     // ─────────────────────────────
     // SEND MESSAGE + NOTIFY ADMIN
     // ─────────────────────────────
+    // Envoie le message au serveur et cree la notification admin au premier envoi.
     const sendMessage = async () => {
         if (!input.trim() || !socket || !connected || !roomId) return;
 
@@ -80,6 +83,7 @@ export default function LiveChat() {
             hasNotifiedRef.current = true;
             setNotifStatus('sending');
 
+            // Demande au backend de creer une salle et d'envoyer la notification Telegram.
             try {
                 const res = await fetch(`${SERVER_URL}/api/live-chat/notify`, {
                     method: 'POST',
@@ -103,6 +107,7 @@ export default function LiveChat() {
             }
         }
 
+        // Envoie le texte a la salle Socket.IO du visiteur.
         socket.emit('message', {
             roomId,
             text,
