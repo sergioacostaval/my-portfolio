@@ -1,6 +1,6 @@
 # Portfolio Professionnel & Communication Temps Reel
 
-Portfolio full-stack construit avec React, Tailwind CSS, Node.js, Express, Socket.IO et WebRTC. Le projet inclut un site portfolio responsive, un chat texte en temps reel, des notifications Telegram et une fonctionnalite d'appel video basee sur WebRTC.
+Portfolio full-stack construit avec React, Tailwind CSS, Node.js, Express et Socket.IO. Le projet inclut un site portfolio responsive, un chat texte en temps reel, des notifications Telegram, planifications des meetings avec Calendly et une fonctionnalite d'appel video.
 
 ## Stack
 
@@ -12,6 +12,7 @@ Portfolio full-stack construit avec React, Tailwind CSS, Node.js, Express, Socke
 - Socket.IO Client
 - WebRTC natif
 - EmailJS
+- Calendly
 
 **Backend**
 - Node.js
@@ -29,19 +30,63 @@ Portfolio full-stack construit avec React, Tailwind CSS, Node.js, Express, Socke
 
 ```text
 portfolio_chat/
-|-- client/                 # Application React/Vite
+|-- client/     # Aplication React/Vite
 |   |-- Dockerfile
 |   |-- .env.example
-|   `-- src/
-|-- server/                 # Serveur Express + Socket.IO
+|   |-- vercel.json
+|   |-- public/
+|   |   |-- screenshots/
+|   |   |-- Sergio_Acosta_CV.pdf
+|   |   `-- sergio-profile.png
+|   |-- src/
+|   |   |-- components/
+|   |   |   |-- portfolio/
+|   |   |   |   |-- AboutSection.jsx
+|   |   |   |   |-- ContactSection.jsx
+|   |   |   |   |-- HeroSection.jsx
+|   |   |   |   |-- LiveChat.jsx
+|   |   |   |   |-- Navbar.jsx
+|   |   |   |   |-- ProjectsSection.jsx
+|   |   |   |   |-- SkillsSection.jsx
+|   |   |   |   `-- VideoChat.jsx
+|   |   |   `-- ui/
+|   |   |-- pages/
+|   |   |   `-- Home.jsx
+|   |   |-- lib/
+|   |   |-- data/
+|   |   |-- App.jsx
+|   |   `-- main.jsx
+|   |-- package.json
+|   `-- vite.config.js
+|-- server/       # Serveur Express + Socket.IO
 |   |-- Dockerfile
 |   |-- .env.example
 |   `-- server.js
 |-- docker-compose.yml
 |-- .env.example
 |-- package.json
-`-- README.md
+|-- package-lock.json
+|-- README.md
+`-- .gitignore
 ```
+
+## Captures D'ecran
+
+### Accueil
+
+![Accueil du portfolio](client/public/screenshots/home.png)
+
+### A propos
+
+![Section A propos](client/public/screenshots/about.png)
+
+### Contact
+
+![Section Contact](client/public/screenshots/contact.png)
+
+### Chat Admin
+
+![Interface admin du chat](client/public/screenshots/admin-chat.png)
 
 ## Variables D'environnement
 
@@ -119,12 +164,6 @@ URLs locales:
 - Backend: `http://localhost:3001`
 - Admin chat: `http://localhost:5173/chat`
 
-Tester rapidement le backend:
-
-```bash
-curl http://localhost:3001/api/live-chat/rooms
-```
-
 ## Docker
 
 Le projet peut etre lance avec une seule commande:
@@ -189,8 +228,6 @@ docker-compose down
 - Signalisation WebRTC via Socket.IO
 - Serveurs STUN publics Google
 
-Note: en production, WebRTC/getUserMedia exige HTTPS.
-
 ## Scripts
 
 ```bash
@@ -198,8 +235,6 @@ npm run dev          # Lance client + serveur
 npm run dev:client   # Lance seulement Vite
 npm run dev:server   # Lance seulement Express/Socket.IO
 npm run build        # Build du frontend
-npm run preview      # Preview du build frontend
-npm run lint         # ESLint
 ```
 
 ## Endpoints Principaux
@@ -232,13 +267,6 @@ Deploiement actuel:
 - Backend Render: `https://my-portfolio-api-1ldo.onrender.com`
 - Admin chat: `https://my-portfolio-two-theta-kq3fil0jzy.vercel.app/chat`
 
-Tests rapides:
-
-```bash
-curl https://my-portfolio-api-1ldo.onrender.com/api/live-chat/rooms
-curl https://my-portfolio-api-1ldo.onrender.com/api/video/rooms/test
-```
-
 Variables importantes en production:
 
 - `CLIENT_URL`: `https://my-portfolio-two-theta-kq3fil0jzy.vercel.app`
@@ -255,12 +283,12 @@ Le frontend utilise `client/vercel.json` pour rediriger les routes React vers `i
 ## Securite
 
 - Les `.env` reels sont ignores par Git.
-- Les tokens Telegram et les cles EmailJS ne doivent pas etre hardcodes dans le code source.
+- Les tokens Telegram et les cles EmailJS ne sont pas hardcodes dans le code source.
 - Si un token a deja ete publie dans GitHub, il faut le regenerer.
 
 ## Etat Du Projet
 
-Fonctionnel localement:
+Fonctionnel:
 
 - Portfolio React
 - Chat texte Socket.IO
@@ -268,10 +296,7 @@ Fonctionnel localement:
 - Appel video WebRTC
 - Docker Compose local
 - Deploiement Vercel + Render
+- Liens vers Linkedin, Github et CV
+- Planification des meetings avec Calendly
+- Tests production
 
-A completer pour couvrir tout le cahier des charges:
-
-- API REST complete avec JWT/CRUD
-- Base de donnees
-- Documentation Swagger ou Postman
-- Tests production WebRTC sous HTTPS
