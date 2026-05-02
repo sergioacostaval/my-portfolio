@@ -3,39 +3,43 @@ import { motion } from 'framer-motion';
 
 const skillCategories = [
     {
-        title: 'Frontend',
+        title: 'Frontend and Web',
         skills: [
-            { name: 'React / Next.js', level: 95 },
-            { name: 'TypeScript', level: 90 },
+            { name: 'React', level: 85 },
+            { name: 'HTML / CSS', level: 90 },
             { name: 'Tailwind CSS', level: 95 },
-            { name: 'Framer Motion', level: 85 },
+            { name: 'Vite', level: 85 },
+            { name: 'Responsive Design', level: 90 },
         ],
     },
     {
-        title: 'Backend',
+        title: 'Backend & Programming',
         skills: [
-            { name: 'Node.js', level: 90 },
-            { name: 'Python / Django', level: 85 },
-            { name: 'PostgreSQL', level: 80 },
-            { name: 'REST / GraphQL', level: 88 },
+            { name: 'Node.js', level: 92 },
+            { name: 'Python', level: 95 },
+            { name: 'C#', level: 95 },
+            { name: 'SQL', level: 95 },
+            { name: 'Swift', level: 88 },
         ],
     },
     {
-        title: 'Outils & DevOps',
+        title: 'Data & Automation',
         skills: [
-            { name: 'Git / GitHub', level: 92 },
-            { name: 'Docker', level: 78 },
-            { name: 'AWS / Vercel', level: 82 },
-            { name: 'CI/CD', level: 75 },
+            { name: 'Excel Avancé', level: 95 },
+            { name: 'VBA', level: 80 },
+            { name: 'Access', level: 85 },
+            { name: 'Power BI', level: 75 },
+            { name: 'Prompt IA', level: 95 },
         ],
     },
     {
-        title: 'Design',
+        title: 'Tools & Deployment',
         skills: [
-            { name: 'Figma', level: 88 },
-            { name: 'UI/UX Design', level: 85 },
-            { name: 'Responsive Design', level: 95 },
-            { name: 'Design Systems', level: 80 },
+            { name: 'Git / GitHub', level: 90 },
+            { name: 'Docker', level: 85 },
+            { name: 'Vercel', level: 85 },
+            { name: 'Visual Studio', level: 95 },
+            { name: 'Render', level: 80 }
         ],
     },
 ];
@@ -79,7 +83,7 @@ export default function SkillsSection() {
                         Technologies & <span className="text-primary">Expertise</span>
                     </h2>
                     <p className="mt-4 text-muted-foreground font-inter max-w-xl mx-auto">
-                        Un ensemble de compétences variées pour répondre à tous types de projets web.
+                        Un ensemble de compétences variées pour répondre à tous types de projets.
                     </p>
                 </motion.div>
 

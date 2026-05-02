@@ -13,14 +13,14 @@ import {
 } from 'lucide-react';
 
 const focusAreas = [
-    { icon: BarChart3, label: 'Data', detail: 'Analyse et tableaux de bord' },
+    { icon: BarChart3, label: 'Solutions sur mesure', detail: 'Aplications métiers performantes' },
     { icon: Bot, label: 'IA', detail: 'Automatisation intelligente' },
     { icon: TrendingUp, label: 'Trading', detail: 'Outils de décision' },
 ];
 
 const metrics = [
     { value: '5+', label: 'Projets livrés' },
-    { value: '30+', label: 'Utilisateurs aidés' },
+    { value: '100%', label: 'Qualité garantie' },
     { value: '24h', label: 'Réponse rapide' },
 ];
 
@@ -59,7 +59,7 @@ export default function HeroSection() {
                         className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl"
                     >
                         Je conçois des applications métiers performantes, des expériences claires
-                        et des solutions sur mesure autour de la data, de l'IA et du trading.
+                        et des solutions sur mesure autour de l'IA et du trading.
                     </motion.p>
 
                     <motion.div
@@ -90,8 +90,8 @@ export default function HeroSection() {
                         className="mt-10 flex items-center gap-4"
                     >
                         {[
-                            { icon: Github, href: '#', label: 'GitHub' },
-                            { icon: Linkedin, href: '#', label: 'LinkedIn' },
+                            { icon: Github, href: 'https://github.com/sergioacostaval/', label: 'GitHub' },
+                            { icon: Linkedin, href: 'https://www.linkedin.com/in/sergio-acosta-80ba3277/', label: 'LinkedIn' },
                             { icon: Mail, href: '#contact', label: 'Email' },
                         ].map(({ icon: Icon, href, label }) => (
                             <a

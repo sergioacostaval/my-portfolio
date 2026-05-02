@@ -2,8 +2,8 @@ import React from 'react';
 import { Github, Linkedin, Mail, Heart } from 'lucide-react';
 
 const socialLinks = [
-    { icon: Github, href: '#', label: 'GitHub' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Github, href: 'https://github.com/sergioacostaval/', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/sergio-acosta-80ba3277/', label: 'LinkedIn' },
     { icon: Mail, href: '#contact', label: 'Email' },
 ];
 
@@ -13,9 +13,9 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground font-inter">
-                        <span>© {new Date().getFullYear()} Portfolio. Fait avec</span>
+                        <span>© {new Date().getFullYear()} Portfolio Pensé pour être utile, </span>
                         <Heart className="w-3.5 h-3.5 text-primary fill-primary" />
-                        <span>et beaucoup de café.</span>
+                        <span>construit pour rester simple.</span>
                     </div>
 
                     <div className="flex items-center gap-4">

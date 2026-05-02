@@ -4,36 +4,36 @@ import ProjectCard from './ProjectCard';
 
 const projects = [
     {
-        title: 'E-Commerce Premium',
-        description: "Plateforme e-commerce complète avec panier, paiement Stripe et tableau de bord d'administration avancé.",
-        image: 'https://media.base44.com/images/public/69df06c90bf17d8b42d002b4/8d3a69fce_generated_afcb8360.png',
-        tags: ['React', 'Node.js', 'Stripe', 'PostgreSQL'],
+        title: 'Trading Bot',
+        description: "Un robot de trading basé sur Python, utilisant des stratégies de backtesting, analyse technique et Notifications Telegram.",
+        image: '/tradingBot.png',
+        tags: ['Python', 'Pandas', 'Trading', 'SQLite'],
+        category: 'Trading',
+    },
+    {
+        title: 'Sports Betting Management System',
+        description: "Interactive sports betting website developed in Flask, incorporating CRUD operations and a SQLite database.",
+        image: '/betSports.png',
+        tags: ['Python', 'Flask', 'SQLIte', 'Crud'],
         category: 'Web',
     },
     {
-        title: 'SaaS Project Manager',
-        description: "Application de gestion de projets en temps réel avec tableaux Kanban, suivi du temps et collaboration d'équipe.",
-        image: 'https://media.base44.com/images/public/69df06c90bf17d8b42d002b4/4adba659d_generated_2434fc75.png',
-        tags: ['Next.js', 'TypeScript', 'Prisma', 'WebSocket'],
-        category: 'Web',
-    },
-    {
-        title: 'FinTech Mobile App',
-        description: "Application bancaire mobile avec transactions sécurisées, analytics financiers et gestion de budget intelligent.",
-        image: 'https://media.base44.com/images/public/69df06c90bf17d8b42d002b4/1f8a3d5f4_generated_10e200ec.png',
-        tags: ['React Native', 'Python', 'AWS', 'AI/ML'],
+        title: 'Compagnon Urbain App',
+        description: "Application mobile développée qui analyse les émotions de l’utilisateur (texte, voix ou vidéo) et recommande des lieux adaptés selon le contexte (émotion, météo, localisation).",
+        image: '/compagnonUrbain.png',
+        tags: ['C#', '.NET MAUI', 'Hume AI', 'Émotions'],
         category: 'Mobile',
     },
     {
-        title: 'Agence Créative',
-        description: "Site vitrine ultra-moderne pour une agence créative avec animations immersives et design éditorial.",
-        image: 'https://media.base44.com/images/public/69df06c90bf17d8b42d002b4/7cc6f8fa2_generated_0eb2b280.png',
-        tags: ['React', 'Three.js', 'GSAP', 'Figma'],
-        category: 'Design',
+        title: 'Stocks Investhink',
+        description: "Application web pour analyser Stocks, à travers des indicateurs financiers et des signaux indicatifs d'achat et vente.\n",
+        image: '/stocksInvesthink.png',
+        tags: ['C#', 'ASP.NET Core MVC', 'EF Core', 'SQLite'],
+        category: 'Web',
     },
 ];
 
-const categories = ['Tous', 'Web', 'Mobile', 'Design'];
+const categories = ['Tous', 'Trading', 'Mobile', 'Web'];
 
 export default function ProjectsSection() {
     const [activeFilter, setActiveFilter] = useState('Tous');

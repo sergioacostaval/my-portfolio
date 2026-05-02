@@ -5,7 +5,7 @@ import { BrainCircuit, Code2, Database, LineChart, Rocket, Users } from 'lucide-
 const stats = [
     { icon: Code2, value: '1+', label: "Année d'expérience" },
     { icon: Rocket, value: '5+', label: 'Projets réalisés' },
-    { icon: Users, value: '30+', label: 'Clients satisfaits' },
+    { icon: Users, value: '24h', label: 'Réponse rapide' },
 ];
 
 const strengths = [
@@ -47,7 +47,7 @@ export default function AboutSection() {
                         </h2>
                         <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
                             Développeur Full Stack récemment diplômé d'un DEC en informatique,
-                            je relie analyse de données, intelligence artificielle et trading pour
+                            je relie des applications métiers performantes, IA et trading pour
                             livrer des outils concrets, lisibles et utiles.
                         </p>
 
