@@ -32,6 +32,7 @@ Portfolio full-stack construit avec React, Tailwind CSS, Node.js, Express et Soc
 portfolio_chat/
 |-- client/     # Aplication React/Vite
 |   |-- Dockerfile
+|	|-- .env
 |   |-- .env.example
 |   |-- vercel.json
 |   |-- public/
@@ -60,9 +61,11 @@ portfolio_chat/
 |   `-- vite.config.js
 |-- server/       # Serveur Express + Socket.IO
 |   |-- Dockerfile
+|	|-- .env
 |   |-- .env.example
 |   `-- server.js
 |-- docker-compose.yml
+|-- .env
 |-- .env.example
 |-- package.json
 |-- package-lock.json

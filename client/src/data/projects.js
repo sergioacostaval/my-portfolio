@@ -1,0 +1,88 @@
+export const projects = [
+    {
+        slug: 'trading-bot',
+        title: 'Trading Bot',
+        subtitle: 'Bot d’analyse et d’automatisation pour stratégies de trading.',
+        description: 'Un robot de trading basé sur Python, avec backtesting, analyse technique et notifications Telegram.',
+        image: '/tradingBot.png',
+        tags: ['Python', 'Pandas', 'Trading', 'SQLite'],
+        category: 'Trading',
+        role: 'Développement backend, logique de stratégie et flux d’alertes.',
+        problem: 'L’objectif était d’évaluer des signaux de marché sans devoir surveiller les graphiques manuellement toute la journée.',
+        solution: 'Construire un flux qui traite des données historiques, teste des stratégies et envoie des alertes lorsque les conditions configurées sont réunies.',
+        highlights: [
+            'Backtesting pour valider les règles avant leur utilisation.',
+            'Indicateurs techniques pour détecter des entrées et sorties potentielles.',
+            'Persistance SQLite pour conserver les résultats et les configurations.',
+            'Notifications Telegram pour suivre les signaux générés par le bot.',
+        ],
+        outcome: 'Ce projet met en avant l’architecture, la logique de décision et l’automatisation appliquée à un cas de marché concret.',
+        repoUrl: '#',
+    },
+    {
+        slug: 'sports-betting-management-system',
+        title: 'Sports Betting Management System',
+        subtitle: 'Système web pour gérer les paris sportifs et les enregistrements opérationnels.',
+        description: 'Interactive sports betting website developed in Flask, incorporating CRUD operations and a SQLite database.',
+        image: '/betSports.png',
+        tags: ['Python', 'Flask', 'SQLite', 'CRUD'],
+        category: 'Web',
+        role: 'Développement full stack avec Flask, vues, routes CRUD et base de données.',
+        problem: 'Le besoin était d’organiser les paris, les résultats et les données associées dans une interface claire.',
+        solution: 'Créer une application web avec opérations CRUD, stockage SQLite et écrans conçus pour une gestion rapide.',
+        highlights: [
+            'Création, modification et suppression des entités principales.',
+            'Base de données SQLite pour garder le projet simple et portable.',
+            'Parcours web clair pour consulter l’information rapidement.',
+            'Structure adaptée à la gestion et au suivi des données.',
+        ],
+        outcome: 'Le projet présente un flux de gestion complet, avec une base simple et une interface orientée productivité.',
+        repoUrl: '#',
+    },
+    {
+        slug: 'compagnon-urbain-app',
+        title: 'Compagnon Urbain App',
+        subtitle: 'Application mobile qui recommande des lieux selon l’émotion, le contexte et la localisation.',
+        description: 'Application mobile qui analyse les émotions de l’utilisateur par texte, voix ou vidéo et recommande des lieux adaptés au contexte.',
+        image: '/compagnonUrbain.png',
+        tags: ['C#', '.NET MAUI', 'Hume AI', 'Émotions'],
+        category: 'Mobile',
+        role: 'Développement mobile, intégration d’IA émotionnelle et conception du flux de recommandation.',
+        problem: 'L’idée était de connecter l’état émotionnel de l’utilisateur à des recommandations utiles dans un contexte urbain.',
+        solution: 'Combiner la capture d’entrée, l’analyse émotionnelle, la météo, la localisation et une couche de recommandation contextuelle.',
+        highlights: [
+            'Entrée multimodale: texte, voix ou vidéo.',
+            'Intégration avec Hume AI pour l’analyse émotionnelle.',
+            'Recommandations conçues pour un contexte urbain réel.',
+            'Experience mobile construite avec .NET MAUI.',
+        ],
+        outcome: 'Ce projet montre un concept mobile complet, du signal émotionnel jusqu’à la recommandation personnalisée.',
+        repoUrl: '#',
+    },
+    {
+        slug: 'stocks-investhink',
+        title: 'Stocks Investhink',
+        subtitle: 'Application web pour analyser des actions avec des indicateurs financiers.',
+        description: 'Application web pour analyser des stocks à travers des indicateurs financiers et des signaux indicatifs d’achat et de vente.',
+        image: '/stocksInvesthink.png',
+        tags: ['C#', 'ASP.NET Core MVC', 'EF Core', 'SQLite'],
+        category: 'Web',
+        role: 'Développement MVC, modèle de données, calculs financiers et présentation des indicateurs.',
+        problem: 'Comparer des actions demande de regrouper données, indicateurs et signaux dans une vue facile à interpréter.',
+        solution: 'Créer une application ASP.NET Core MVC qui organise l’information financière et présente des signaux indicatifs.',
+        highlights: [
+            'Architecture ASP.NET Core MVC.',
+            'Persistance avec EF Core et SQLite.',
+            'Indicateurs financiers présentés pour une lecture rapide.',
+            'Base préparée pour ajouter d’autres sources de données ou métriques.',
+        ],
+        outcome: 'Le projet met en avant une lecture structurée des données financières et une base solide pour enrichir l’analyse.',
+        repoUrl: '#',
+    },
+];
+
+export const projectCategories = ['Tous', 'Trading', 'Mobile', 'Web'];
+
+export function getProjectBySlug(slug) {
+    return projects.find((project) => project.slug === slug);
+}
