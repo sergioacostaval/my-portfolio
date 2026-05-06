@@ -1,141 +1,62 @@
-# =========================
-
 # Node.js
-
-# =========================
-
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# =========================
-
 # Environment variables
-
-# =========================
-
 .env
 .env.*
 !.env.example
 
-# =========================
-
-# Build / production
-
-# =========================
-
-dist/
+# Build
 build/
 out/
 .next/
 .vite/
 
-# =========================
-
 # Vite
-
-# =========================
-
 vite.config.ts.timestamp-*
 vite.config.js.timestamp-*
 
-# =========================
-
 # Logs
-
-# =========================
-
 logs/
 *.log
 
-# =========================
-
 # OS files
-
-# =========================
-
 .DS_Store
 Thumbs.db
 
-# =========================
-
 # IDE / Editor
-
-# =========================
-
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# =========================
-
 # Testing
-
-# =========================
-
 coverage/
 *.lcov
 
-# =========================
-
 # Cache
-
-# =========================
-
 .cache/
 .eslintcache
 
-# =========================
-
 # TypeScript
-
-# =========================
-
 *.tsbuildinfo
 
-# =========================
-
 # Tailwind
-
-# =========================
-
 .tailwindcache/
-
-# =========================
-
-# shadcn/ui
-
-# =========================
 
 components.json
 
-# =========================
-
-# Client-specific
-
-# =========================
-
+# Client
 client/node_modules/
-client/dist/
 
-# =========================
-
-# Server-specific
-
-# =========================
-
+# Server
 server/node_modules/
-server/dist/
 server/build/
 
-# =========================
-
 # Misc
-
-# =========================
-
 *.tgz
 *.zip
