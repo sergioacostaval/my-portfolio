@@ -44,6 +44,17 @@ export default function ProjectCaseStudy() {
                     <h1 className="mt-4 font-playfair text-4xl font-bold leading-tight md:text-6xl">{project.title}</h1>
                     <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">{project.subtitle}</p>
                     <div className="mt-8 flex flex-wrap gap-3">
+                        {project.liveUrl && (
+                            <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                            >
+                                <ExternalLink className="h-4 w-4" />
+                                Voir le site en direct
+                            </a>
+                        )}
                         <a
                             href={project.image}
                             target="_blank"
